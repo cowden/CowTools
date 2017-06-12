@@ -1,0 +1,12 @@
+source .screenrc
+
+screen -t alsa
+screen -t ncmpcpp
+
+select 0
+exec alsamixer -c 1
+
+select 1
+exec mpd
+exec ncmpcpp
+

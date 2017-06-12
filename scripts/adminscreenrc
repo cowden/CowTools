@@ -1,0 +1,10 @@
+source .screenrc
+
+screen -t top
+screen -t su
+
+
+select 0
+exec top
+
+

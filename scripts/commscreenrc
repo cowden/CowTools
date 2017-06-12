@@ -1,0 +1,14 @@
+source .screenrc
+
+screen -t finch
+screen -t mutt
+screen -t irssi
+
+select 0
+exec finch
+
+select 1
+exec mutt
+
+select 2
+exec irssi

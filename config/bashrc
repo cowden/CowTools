@@ -1,0 +1,45 @@
+#
+# ~/.bashrc
+#
+
+# If not running interactively, don't do anything
+[[ $- != *i* ]] && return
+
+alias ls='ls --color=auto'
+alias vi='vim'
+alias google-chrome="google-chrome-stable"
+
+
+PS1='[\u@\h \W]\$ '
+
+#
+# transparent xterm windows
+[ -n "$XTERM_VERSION" ] && transset-df --id "$WINDOWID" 0.75 > /dev/null
+
+
+export TZ="US/Central"
+
+if [ -z "`echo $PATH | grep $HOME`" ]; then
+  export PATH=$HOME/bin:$HOME/scripts:$PATH
+fi
+
+export INFOPATH=$HOME/share/info
+export LS_COLORS="no=00:fi=00:di=00;34;47:ln=00;36:pi=40;33:so=00;35:bd=40;33;01:cd=40;33;01:or=01;05;37;41:mi=01;05;37;41:ex=00;32:*.cmd=00;32:*.exe=00;32:*.com=00;32:*.btm=00;32:*.bat=00;32:*.sh=00;32:*.csh=00;32:*.tar=00;31:*.tgz=00;31:*.arj=00;31:*.taz=00;31:*.lzh=00;31:*.zip=00;31:*.z=00;31:*.Z=00;31:*.gz=00;31:*.bz2=00;31:*.bz=00;31:*.tz=00;31:*.rpm=00;31:*.cpio=00;31:*.jpg=00;35:*.gif=00;35:*.bmp=00;35:*.xbm=00;35:*.xpm=00;35:*.png=00;35:*.tif=00;35:"
+export ANDROID_HOME=/opt/android-sdk
+export WINEARCH=win32
+
+
+
+alias extsetup="source ~/scripts/extern_setup.sh"
+
+alias l.="ls -d *."
+alias la="ls -a"
+alias ll="ls -al"
+
+alias cdo='cd $OLDPWD' #must use single quotes to get env variable right
+alias dbfs="python2 ~/scripts/dropbox.py"
+
+
+alias avcmd="screen -S AV -c $HOME/scripts/avscreenrc"
+alias admincmd="screen -S admin -c $HOME/scripts/adminscreenrc"
+alias commcmd="screen -S comm -c $HOME/scripts/commscreenrc"
