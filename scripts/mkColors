@@ -1,0 +1,19 @@
+#!/bin/bash
+
+
+##########################
+# Simple bash script to print colors
+
+echo "Formats"
+for attr in `seq 1 8`; do
+  echo -e "\e[${attr}mText ^[${attr}m \e[$((attr+20))m"
+done
+
+
+echo "Colors"
+for i in `seq 30 37`; do
+  echo -e "\e[${i}m^[${i}m\e[0m  \e[$((i+10))m^[$((i+10))m\e[0m"
+done
+
+
+

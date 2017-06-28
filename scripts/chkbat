@@ -1,0 +1,35 @@
+#!/bin/bash
+
+
+INFO_LOC=/sys/class/power_supply/BAT1
+
+# return the current charge
+chrg=$(cat ${INFO_LOC}/charge_now) 
+
+# return the full capacity
+chrg_full=$(cat ${INFO_LOC}/charge_full)
+
+# return the present capacity
+cap=$(cat ${INFO_LOC}/capacity)
+
+# return the present status
+state=$(cat ${INFO_LOC}/status)
+
+# create the battery level string
+len=20
+perc=$(echo "$cap*$len/100" | bc)
+oneperc=$(echo "$len-$perc" | bc)
+
+
+eqs=$(printf '=%.0s' `seq 1 $perc`)
+mins=$(printf '.%.0s' `seq 1 $oneperc`)
+
+batstr=$(echo "[\e[42;32m$eqs\e[0m$mins]")
+
+if [ "$state" == "Discharging" ]; then
+  state="\e[31m$state\e[0m"
+else
+  state="\e[3m$state\e0m"
+fi
+
+echo -e "Battery status: $state $batstr $cap%"
