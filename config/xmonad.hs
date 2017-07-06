@@ -112,6 +112,9 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
    -- media keys
     --, ((modm, 0xff52), spawn "pactl set-sink-volume 0 +1%" )
     --, ((modm, 0xff54), spawn "pactl set-sink-volume 0 -1%" )
+    , ((0, 0x1008ff12 ), spawn "/home/me/scripts/volctl -t" )
+    , ((0, 0x1008ff11 ), spawn "/home/me/scripts/volctl -d 10" )
+    , ((0, 0x1008ff13 ), spawn "/home/me/scripts/volctl -i 10" )
 
     -- magnify screen portion
     , ((modm .|. shiftMask, xK_m    ), spawn "xmag" )
