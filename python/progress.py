@@ -38,8 +38,8 @@ class ProgressBar():
 
     # construct print string
     pstr = str(name) + ' ' + '[' + '='*int(perc*20) + '-'*int(20*(1-perc)) + ']' + '%.2f%%' % (perc*100.)
-    pstr += ' Elapsed: ' + str(datetime.timedelta(seconds=et))
-    pstr += ' ETA: ' + str(datetime.timedelta(seconds=eta))
+    pstr += ' Elapsed: ' + str(datetime.timedelta(seconds=int(et)))
+    pstr += ' ETA: ' + str(datetime.timedelta(seconds=int(eta)))
 
     sys.stdout.write('\r%s' % pstr)
     sys.stdout.flush()
