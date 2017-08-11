@@ -55,22 +55,82 @@ return the forecast.'''
   c.close()
 
   # format forecast data
-  return result
+  return html.document_fromstring(result)
+
    
 
-
 #
-# format and print results
-def printResults(result):
+# parse the results of the pull
+def parseResults(result):
   '''Format and display the results of the forecast query.'''
 
-  pass
+  # get the body text
+  body = re.sub('(^ +)|( +$)','',re.sub('[\n]','',''.join(result.xpath('//div[@class="body"]/p/text()'))))
 
+
+  # get the current conditions
+  cur_cond = result.xpath('//div[@id="current-conditions"]')[0]
+  cc = {'station': cur_cond.xpath('div[@class="panel-heading"]/div/h2/text()')[0]
+    ,'station_info': ' '.join(cur_cond.xpath('div/div/span/b/text()|div/div/span/text()'))
+    }
+
+  # collect all of the current condition details
+  cc_table_elements = cur_cond.xpath('div[@class="panel-body" and @id="current-conditions-body"]')[0]
+  cc['current'] = cc_table_elements.xpath('div[@id="current_conditions-summary"]/p[@class="myforecast-current"]/text()')[0]
+  cc['lrg'] = cc_table_elements.xpath('div[@id="current_conditions-summary"]/p[@class="myforecast-current-lrg"]/text()')[0]
+  cc['sm'] = cc_table_elements.xpath('div[@id="current_conditions-summary"]/p[@class="myforecast-current-sm"]/text()')[0]
+
+  for element in cc_table_elements.xpath('div[@id="current_conditions_detail"]/table/tr'):
+    cc[ element.xpath('td/b/text()')[0] ] = element.xpath('td/text()')[0]
+  
+  
+  # get the 7 day forecast
+  fc = []
+  for p in result.xpath('//div[@class="tombstone-container"]'):
+    forecast = p.xpath('p/text()')
+    fc.append(forecast) 
+  
+
+  # get station information
+
+  # return the current conditions and forecast
+  return [cc,fc]
 
 #
+# format and print the results
+# print the current conditions
+def printCurrentConditions(current):
+
+  print('\033[1mCurrent Conditions\033[0m')
+  print('Station: %s' % current['station'])
+  print('\033[32mTemp: %s (%s)\033[0m' % (current['lrg'],current['sm']))
+
+  for k,v in current.items():
+    if k in ('lrg','sm','current','station'):
+      continue
+
+    print('\t%s: %s' % (k,v))
+
+#
+# print the 7 day forecast
+def printForecast(forecast):
+
+  print('\033[1m7 Day Forecast\033[0m')
+  for fc in forecast:
+    print('\t%s: %s' % (fc[0],' '.join(fc[1:])) )
+
+ 
+
+
+#class
 # print usage
 def printUsage():
-  pass
+  usage = '''weather CLI forecast tool..
+\tweather <[City, State] or [Lat Long]>
+  '''
+
+  print(usage)
+
 
 
 #
@@ -83,7 +143,7 @@ if __name__ == '__main__':
 
   if len(sys.argv[1:]) == 1:
     # search for location
-    result = locationSearch(query)
+    result = locationSearch(sys.argv[1])
 
   elif len(sys.argv[1:]) == 2:
     # go to lat/long page for forecast
@@ -92,8 +152,12 @@ if __name__ == '__main__':
   else:
     # print usage and terminate
     printUsage()
+    sys.exit(0)
 
+  result = parseResults(result)
 
   # print the formatted forecast and conditions
-  printResults(result)
+  printCurrentConditions(result[0])
+  printForecast(result[1])
+
 
