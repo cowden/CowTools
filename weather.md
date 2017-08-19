@@ -46,3 +46,5 @@ Post the following data:
 * `inputstring=City, ST`
 * `btnSearch=Go`
 
+Lat/Long weather:
+http://forecast.weather.gov/MapClick.php?lat=XXXXXX&lon=XXXXX
