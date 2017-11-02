@@ -7,6 +7,9 @@
 import os,sys
 import time,datetime
 
+# future proof python2/3
+from future.utils import iteritems
+
 class ProgressBar():
 
   def __init__(self,N,**kwargs):
@@ -20,11 +23,11 @@ class ProgressBar():
     self.frequency_ = 10
 
     # parse kwargs
-    for k,v in kwargs.iteritems():
+    for k,v in iteritems(kwargs):
       if k == 'name':
-    	self.name_ = str(v)
+        self.name_ = str(v)
       elif k == 'frequency':
-	self.frequency_ = int(v)
+        self.frequency_ = int(v)
     
     self.is_started_ = False
     self.count_ = 0
