@@ -284,6 +284,7 @@ myManageHook = composeAll
     , className =? "Gnuplot"    --> doFloat
     , className =? "gnuplot_qt" --> doFloat
     , className =? "Gnuplot_qt" --> doFloat
+    , className =? "matplotlib" --> doFloat
     , className =? " " --> doFloat
     , className =? "Display" --> doFloat
     , title     =? "cmsShow" --> (doFloat <+> doShift "floats")
