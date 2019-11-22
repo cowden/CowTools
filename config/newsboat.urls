@@ -1,0 +1,12 @@
+# Newsboat URLs list
+# put me in ~/.newsboat/urls
+http://arxiv.org/rss/hep-ph
+http://arxiv.org/rss/hep-ex
+http://arxiv.org/rss/stat
+http://arxiv.org/rss/cs
+http://arxiv.org/rss/physics.hist-ph
+http://arxiv.org/rss/physics.med-ph
+https://physicstoday.scitation.org/feed/most-recent
+https://home.cern/api/news/feed.rss
+https://www.theatlantic.com/feed/all/
+https://newrepublic.com/rss.xml
