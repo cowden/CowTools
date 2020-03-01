@@ -1,0 +1,9 @@
+#!/bin/bash
+
+#
+# a stupid script for a bad spellr
+
+test="$*"
+
+echo "$test" | aspell -a
+
