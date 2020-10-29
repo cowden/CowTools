@@ -1,0 +1,63 @@
+
+syntax on
+
+set t_kb=
+set backspace=indent,eol,start
+
+
+set nomodeline
+set modelines=0
+set noerrorbells
+set nowrap
+set hlsearch
+set tabstop=8 softtabstop=8
+set shiftwidth=4
+set expandtab
+set nu
+set incsearch
+set smartcase
+set smartindent
+
+setlocal spell spelllang=en_us
+
+
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+
+Plugin 'VundleVim/Vundle.vim'
+Plugin 'tpope/vim-fugitive'
+Plugin 'ycm-core/youcompleteme'
+Plugin 'psf/black'
+Plugin 'morhetz/gruvbox'
+
+call vundle#end()
+
+colorscheme gruvbox
+set background=dark
+
+map <S-F7> :r!xclip -o<CR>
+
+let g:netrw_banner = 0
+let g:netrw_browse_split = 2
+let g:netrw_winsize = 25
+
+let mapleader = " "
+nnoremap <leader>h :wincmd h<CR>
+nnoremap <leader>j :wincmd j<CR>
+nnoremap <leader>k :wincmd k<CR>
+nnoremap <leader>l :wincmd l<CR>
+nnoremap <leader>pv :wincmd v<bar> :Ex <bar> :vertical resize 30<CR>
+nnoremap <leader>q :q<CR>
+
+nnoremap <silent> <leader>gd :YcmCompleter GoTo<CR>
+nnoremap <silent> <leader>gf :YcmCompleter FixIt<CR>
+
+
+au BufNewFile,BufRead *.icc set filetype=cpp
+au BufNewFile,BufRead *.tex set filetype=tex
+au BufNewFile,BufRead *.gnu set filetype=sh
+au Filetype * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
+
+au BufNewFile,BufRead /tmp/mutt* set noautoindent filetype=mail wm=0 tw=72 nonumber nolist
+au BufNewFile,BufRead ~/tmp/mutt* set noautoindent filetype=mail wm=0 tw=72 nonumber nolist
+
