@@ -1,0 +1,39 @@
+#!/usr/bin/env bash
+
+#############################################
+# Execute a search query on duckduckgo from the
+# command line.
+# 
+# See the link below for duckduckgo query details:
+# https://duckduckgo.com/params
+#############################################
+
+BROWSER=w3m
+DDQURL=https://duckduckgo.com/?q=
+
+print_usage () {
+    echo "ddg \"search query\""
+    echo "ddq - CLI duckduckgo search"
+}
+
+encode_query () {
+    # encode the search query
+    echo "$1" | sed "s, ,+,g"
+}
+
+if [[ $# < 1 ]]; then
+    print_usage
+    exit 1
+fi
+
+RAW="$@"
+QUERY=$(encode_query "$RAW")
+
+URL=${DDQURL}${QUERY}
+CMD="$BROWSER $URL"
+
+eval $CMD
+
+exit 0
+
+
