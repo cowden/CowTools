@@ -1,9 +1,11 @@
 
 syntax on
 
+set encoding=utf-8
+
 set t_kb=
 set backspace=indent,eol,start
-
+set laststatus=2
 
 set nomodeline
 set modelines=0
@@ -20,7 +22,6 @@ set smartindent
 
 setlocal spell spelllang=en_us
 
-
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 
@@ -29,6 +30,8 @@ Plugin 'tpope/vim-fugitive'
 Plugin 'ycm-core/youcompleteme'
 Plugin 'psf/black'
 Plugin 'morhetz/gruvbox'
+Plugin 'mbbill/undotree'
+Plugin 'w0rp/ale'
 
 call vundle#end()
 
@@ -38,8 +41,14 @@ set background=dark
 map <S-F7> :r!xclip -o<CR>
 
 let g:netrw_banner = 0
-let g:netrw_browse_split = 2
+let g:netrw_browse_split = 4
 let g:netrw_winsize = 25
+let g:ycm_filetype_blacklist = {
+        \ 'tex': 1,
+        \ 'mail': 1,
+        \ 'netrw': 1,
+        \ 'text': 1
+        \ }
 
 let mapleader = " "
 nnoremap <leader>h :wincmd h<CR>
@@ -48,13 +57,21 @@ nnoremap <leader>k :wincmd k<CR>
 nnoremap <leader>l :wincmd l<CR>
 nnoremap <leader>pv :wincmd v<bar> :Ex <bar> :vertical resize 30<CR>
 nnoremap <leader>q :q<CR>
+nnoremap <leader>bl :buffers<CR>
+nnoremap <leader>bn :bn<CR>
+nnoremap <leader>bp :bp<CR>
+nnoremap <leader>bb :b#<CR>
+nnoremap <Tab> :tabn<CR>
+nnoremap <S-Tab> :tabp<CR>
+nnoremap <leader>ts :tabs<CR>
+nnoremap <leader>tn :tabnew<CR>
 
 nnoremap <silent> <leader>gd :YcmCompleter GoTo<CR>
 nnoremap <silent> <leader>gf :YcmCompleter FixIt<CR>
 
-
 au BufNewFile,BufRead *.icc set filetype=cpp
-au BufNewFile,BufRead *.tex set filetype=tex
+au BufNewFile,BufRead *.tex set filetype=tex tw=72
+au BufNewFile,BufRead *.bib set filetype=tex tw=72
 au BufNewFile,BufRead *.gnu set filetype=sh
 au Filetype * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
 
