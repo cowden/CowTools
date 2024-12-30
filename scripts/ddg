@@ -8,7 +8,7 @@
 # https://duckduckgo.com/params
 #############################################
 
-BROWSER=w3m
+BROWSER="w3m -H"
 DDQURL=https://duckduckgo.com/?q=
 
 print_usage () {

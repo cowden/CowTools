@@ -85,14 +85,14 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     [ ((modm .|. shiftMask, xK_Return), spawn $ XMonad.terminal conf)
 
     -- launch a firefox browser
-    , ((modm, 		   xK_f     ), spawn "firefox" )
+    , ((modm,          xK_f     ), spawn "firefox --private-window" )
     -- launch google chrome browser
     , ((modm,              xK_g     ), spawn "google-chrome-stable" )
     -- launch a midori browser
-    , ((modm, 		   xK_i     ), spawn "midori" )
+    , ((modm,          xK_i     ), spawn "midori" )
  
     -- launch evince
-    , ((modm, 		  xK_x      ), spawn "evince" )
+    , ((modm,         xK_x      ), spawn "evince" )
 
    -- launch thunar
     , ((modm .|. shiftMask, xK_t    ), spawn "thunar" )
@@ -105,7 +105,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
 
 
    -- launch skype
-    , ((modm,		   xK_p     ), spawn "skypeforlinux" )
+    , ((modm,          xK_p     ), spawn "skypeforlinux" )
    -- launch pgadmin
     , ((modm .|. shiftMask, xK_P    ), spawn "pgadmin3" )
 
@@ -124,6 +124,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
 
     -- launch gmrun
     -- , ((modm .|. shiftMask, xK_p     ), spawn "gmrun")
+    , ((modm .|. shiftMask, xK_p   ), spawn "xrandr --output HDMI-0 --mode 1920x1080" )
 
     -- close focused window
     , ((modm .|. shiftMask, xK_c     ), kill)
@@ -301,7 +302,7 @@ myManageHook = composeAll
 -- return (All True) if the default handler is to be run afterwards. To
 -- combine event hooks use mappend or mconcat from Data.Monoid.
 --
-myEventHook = mempty $ docksEventHook
+myEventHook = mempty $ docks
 
 ------------------------------------------------------------------------
 -- Status bars and logging
@@ -311,9 +312,9 @@ myEventHook = mempty $ docksEventHook
 --
 -- myLogHook = return ()
 myLogHook h = dynamicLogWithPP $ xmobarPP
-	{ ppTitle = xmobarColor "green" "". shorten 50
-	, ppOutput = hPutStrLn h
-	}
+    { ppTitle = xmobarColor "green" "". shorten 50
+    , ppOutput = hPutStrLn h
+    }
 
 
 
@@ -337,7 +338,7 @@ myStartupHook = return ()
 -- main = xmonad =<< statusBar myBar myPP toggleStrutsKey myConfig
 main = do
   xmproc <-  spawnPipe "/usr/bin/xmobar /home/me/.xmobarrc"
-  xmonad $ withUrgencyHook NoUrgencyHook $ defaultConfig { 
+  xmonad $ withUrgencyHook NoUrgencyHook $ def { 
       -- simple stuff
         terminal           = myTerminal,
         focusFollowsMouse  = myFocusFollowsMouse,
@@ -355,10 +356,7 @@ main = do
       -- hooks, layouts
         layoutHook         = avoidStruts $ myLayout,
         manageHook         = manageDocks <+> myManageHook,
-        --handleEventHook    = myEventHook,
-        handleEventHook    = mconcat
-                           [ docksEventHook
-                           , handleEventHook defaultConfig ],
+        handleEventHook    = myEventHook,
         --logHook            = dynamicLogWithPP $ defaultPP { ppOutput = hPutStrLn xmproc },
         logHook            = myLogHook xmproc,
         startupHook        = myStartupHook
@@ -373,7 +371,7 @@ main = do
 --
 -- No need to modify this.
 --
-defaults = defaultConfig {
+defaults = def {
       -- simple stuff
         terminal           = myTerminal,
         focusFollowsMouse  = myFocusFollowsMouse,
